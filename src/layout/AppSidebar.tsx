@@ -328,8 +328,7 @@ const AppSidebar: React.FC = () => {
               <img
                 src="/images/logo/logo.png"
                 alt="TerraByte Onboard"
-                width={28}
-                height={28}
+                className="block w-7 h-7 object-contain"
               />
               <span className="text-foreground font-semibold">TerraByte Onboard</span>
             </div>
@@ -337,8 +336,7 @@ const AppSidebar: React.FC = () => {
             <img
               src="/images/logo/logo.png"
               alt="TerraByte Onboard"
-              width={32}
-              height={32}
+              className="block w-8 h-8 object-contain"
             />
           )}
         </Link>
