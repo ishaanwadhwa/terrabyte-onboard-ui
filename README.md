@@ -6,7 +6,7 @@ Terrabyte AI onboard application - built for internal terratech customers only.
 
 1) Install prerequisites
 
-- Node.js 18+ and npm 10+
+- Node.js LTS (18.18+ or 20+). If you use nvm: `nvm use --lts`
 
 2) Install dependencies
 
@@ -45,6 +45,26 @@ Preview the production build locally:
 ```bash
 npm run preview
 ```
+
+### Deploy to Vercel
+
+This project is configured for Vercel static hosting.
+
+1) Push your repo to GitHub/GitLab/Bitbucket
+2) Import the repo into Vercel
+3) Framework preset: "Vite"
+4) Build command: `npm run vercel-build`
+5) Output directory: `dist`
+
+Optional environment variables (add in Vercel Project Settings → Environment Variables):
+
+```env
+VITE_API_BASE_URL=https://api.terra-byte.ai
+VITE_API_TIMEOUT=10000
+VITE_NODE_ENV=production
+```
+
+SPA routing is handled via `vercel.json`, so all non-file routes fall back to `index.html`.
 
 ### Notes
 
