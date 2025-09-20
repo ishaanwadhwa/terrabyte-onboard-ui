@@ -8,19 +8,7 @@
     }
   ],
   "buildCommand": "npm run vercel-build",
-  "cleanUrls": false,
-  "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/images/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
-      ]
-    }
-  ],
   "routes": [
-    { "src": "/(.*\\.(svg|png|jpg|jpeg|gif|ico|webp))", "dest": "/$1" },
-    { "src": "/images/(.*)", "dest": "/images/$1" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
