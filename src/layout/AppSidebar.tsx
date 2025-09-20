@@ -326,7 +326,7 @@ const AppSidebar: React.FC = () => {
           {isExpanded || isHovered || isMobileOpen ? (
             <div className="flex items-center gap-3">
               <img
-                src="/images/logo/logo.png"
+                src="/images/logo/logo.svg"
                 alt="TerraByte Onboard"
                 className="block w-7 h-7 object-contain"
               />
@@ -334,7 +334,7 @@ const AppSidebar: React.FC = () => {
             </div>
           ) : (
             <img
-              src="/images/logo/logo.png"
+              src="/images/logo/logo.svg"
               alt="TerraByte Onboard"
               className="block w-8 h-8 object-contain"
             />
