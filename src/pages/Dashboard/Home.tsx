@@ -8,5 +8,10 @@
 // import PageMeta from "../../components/common/PageMeta";
 
 export default function Home() {
-  return null;
+  return (
+    <div
+      className="-m-4 md:-m-6 h-[calc(100vh-120px)] w-auto bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: 'url(/images/product/home_background.jpeg)' }}
+    />
+  );
 }
