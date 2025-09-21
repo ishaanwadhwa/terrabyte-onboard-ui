@@ -6,8 +6,7 @@ const AppFooter: React.FC = () => {
     <footer className="border-t border-gray-200 dark:border-white/5 py-3 text-theme-xs text-gray-500 dark:text-gray-400">
       <div className="mx-auto max-w-(--breakpoint-2xl) px-2 sm:px-0 flex flex-col sm:flex-row items-center justify-end gap-3">
         <div className="flex items-center gap-2">
-          <BrandIcon className="h-5 w-auto" />
-          <span className="hidden sm:inline">© {new Date().getFullYear()} TerraOnboard</span>
+          <span className="hidden sm:inline">© {new Date().getFullYear()} Terra-Byte.ai</span>
         </div>
         <nav className="flex items-center gap-4">
           <a

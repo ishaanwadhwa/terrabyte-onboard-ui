@@ -249,18 +249,6 @@ export default function ManageOrganization() {
                   className="h-10 w-full sm:w-[280px] rounded-lg border border-gray-200 bg-transparent pl-10 pr-3 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-border dark:bg-background dark:text-white dark:placeholder:text-white/30 dark:focus:border-brand-800"
                 />
               </div>
-              <select
-                value={itemsPerPage}
-                onChange={(e) => {
-                  setItemsPerPage(Number(e.target.value));
-                  setCurrentPage(1);
-                }}
-                className="h-10 rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-brand-500/30 dark:border-brand-500 dark:bg-brand-500 dark:text-white w-full sm:w-auto"
-              >
-                {pageSizeOptions.map((n) => (
-                  <option key={n} value={n}>{n} / page</option>
-                ))}
-              </select>
             </>
           }
         >
@@ -322,7 +310,22 @@ export default function ManageOrganization() {
                 <div className="text-sm text-gray-500 dark:text-gray-400">
                   Showing {startIndex + 1} to {Math.min(endIndex, totalItems)} of {totalItems} results
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="hidden sm:flex items-center gap-2 mr-2 text-sm text-gray-600 dark:text-gray-300">
+                    <span>Items per page</span>
+                    <select
+                      value={itemsPerPage}
+                      onChange={(e) => {
+                        setItemsPerPage(Number(e.target.value));
+                        setCurrentPage(1);
+                      }}
+                      className="h-9 rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-brand-500/30 dark:border-brand-500 dark:bg-brand-500 dark:text-white"
+                    >
+                      {pageSizeOptions.map((n) => (
+                        <option key={n} value={n}>{n}</option>
+                      ))}
+                    </select>
+                  </div>
                   <button
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage(currentPage - 1)}
