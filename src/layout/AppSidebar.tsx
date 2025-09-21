@@ -14,6 +14,7 @@ import {
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  BrandIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
@@ -325,19 +326,11 @@ const AppSidebar: React.FC = () => {
         <Link to="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <div className="flex items-center gap-3">
-              <img
-                src="/images/logo/logo.png"
-                alt="TerraOnboard"
-                className="block w-7 h-7 object-contain"
-              />
+              <BrandIcon className="w-7 h-7" />
               <span className="text-foreground font-semibold">TerraOnboard</span>
             </div>
           ) : (
-            <img
-              src="/images/logo/logo.png"
-              alt="TerraOnboard"
-              className="block w-8 h-8 object-contain"
-            />
+            <BrandIcon className="w-8 h-8" />
           )}
         </Link>
       </div>
