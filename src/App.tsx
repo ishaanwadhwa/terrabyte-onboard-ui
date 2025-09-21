@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
 import NotFound from "./pages/OtherPage/NotFound";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
-import ManageOrganisation from "./pages/Organisation/ManageOrganisation";
+import ManageOrganization from "./pages/Organisation/ManageOrganisation";
 import ManageRole from "./pages/Organisation/ManageRole";
 import ManageMenu from "./pages/Organisation/ManageMenu";
 import ManageUser from "./pages/Organisation/ManageUser";
@@ -11,8 +11,8 @@ import ManageEdgeTemplate from "./pages/Edge/ManageEdgeTemplate";
 import Edge from "./pages/Edge/Edge";
 import ManageAssetTemplate from "./pages/Asset/ManageAssetTemplate";
 import Asset from "./pages/Asset/Asset";
-import AddOrganisation from "./pages/Organisation/AddOrganisation";
-import EditOrganisation from "./pages/Organisation/EditOrganisation";
+import AddOrganization from "./pages/Organisation/AddOrganisation";
+import EditOrganization from "./pages/Organisation/EditOrganisation";
 
 export default function App() {
   return (
@@ -23,13 +23,21 @@ export default function App() {
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
-            {/* Organisation and User Management */}
-            <Route path="/organisation/manage" element={<ManageOrganisation />} />
-            <Route path="/organisation/manage/add" element={<AddOrganisation />} />
-            <Route path="/organisation/manage/edit/:id" element={<EditOrganisation />} />
-            <Route path="/organisation/roles" element={<ManageRole />} />
-            <Route path="/organisation/menus" element={<ManageMenu />} />
-            <Route path="/organisation/users" element={<ManageUser />} />
+            {/* Organization and User Management */}
+            <Route path="/organization/manage" element={<ManageOrganization />} />
+            <Route path="/organization/manage/add" element={<AddOrganization />} />
+            <Route path="/organization/manage/edit/:id" element={<EditOrganization />} />
+            <Route path="/organization/roles" element={<ManageRole />} />
+            <Route path="/organization/menus" element={<ManageMenu />} />
+            <Route path="/organization/users" element={<ManageUser />} />
+
+            {/* Backward-compat redirects from /organisation/... to /organization/... */}
+            <Route path="/organisation/manage" element={<Navigate to="/organization/manage" replace />} />
+            <Route path="/organisation/manage/add" element={<Navigate to="/organization/manage/add" replace />} />
+            <Route path="/organisation/manage/edit/:id" element={<Navigate to="/organization/manage/edit/:id" replace />} />
+            <Route path="/organisation/roles" element={<Navigate to="/organization/roles" replace />} />
+            <Route path="/organisation/menus" element={<Navigate to="/organization/menus" replace />} />
+            <Route path="/organisation/users" element={<Navigate to="/organization/users" replace />} />
 
             {/* Edge Management */}
             <Route path="/edge/templates" element={<ManageEdgeTemplate />} />

@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { UserIcon } from "../../icons";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { Link } from "react-router";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -19,11 +21,18 @@ export default function UserDropdown() {
         onClick={toggleDropdown}
         className="flex items-center text-gray-700 dropdown-toggle dark:text-gray-400"
       >
-        <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
-          <img src="/images/user/owner.jpg" alt="User" className="block w-full h-full object-cover" />
+        <span className="mr-3 overflow-hidden rounded-full h-11 w-11 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+          {imageError ? (
+            <UserIcon className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+          ) : (
+            <img
+              src="/images/user/owner.jpg"
+              alt="User"
+              className="block w-full h-full object-cover"
+              onError={() => setImageError(true)}
+            />
+          )}
         </span>
-
-        <span className="block mr-1 font-medium text-theme-sm">User</span>
         <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""

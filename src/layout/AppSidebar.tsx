@@ -34,12 +34,12 @@ const navItems: NavItem[] = [
   // },
   {
     icon: <UserCircleIcon />,
-    name: "Organisation & Users",
+    name: "Organization & Users",
     subItems: [
-      { name: "Manage Organisation", path: "/organisation/manage" },
-      { name: "Manage Role", path: "/organisation/roles" },
-      { name: "Manage Menu", path: "/organisation/menus" },
-      { name: "Manage User", path: "/organisation/users" },
+      { name: "Manage Organization", path: "/organization/manage" },
+      { name: "Manage Role", path: "/organization/roles" },
+      { name: "Manage Menu", path: "/organization/menus" },
+      { name: "Manage User", path: "/organization/users" },
     ],
   },
   {
@@ -326,16 +326,16 @@ const AppSidebar: React.FC = () => {
           {isExpanded || isHovered || isMobileOpen ? (
             <div className="flex items-center gap-3">
               <img
-                src="/images/logo/logo.svg"
-                alt="TerraByte Onboard"
+                src="/images/logo/logo.png"
+                alt="TerraOnboard"
                 className="block w-7 h-7 object-contain"
               />
-              <span className="text-foreground font-semibold">TerraByte Onboard</span>
+              <span className="text-foreground font-semibold">TerraOnboard</span>
             </div>
           ) : (
             <img
-              src="/images/logo/logo.svg"
-              alt="TerraByte Onboard"
+              src="/images/logo/logo.png"
+              alt="TerraOnboard"
               className="block w-8 h-8 object-contain"
             />
           )}

@@ -30,7 +30,7 @@ const mapOrganizationToFormData = (org: any) => ({
   secondaryPhone: org.phoneNumberSecondary || ""
 });
 
-export default function EditOrganisation() {
+export default function EditOrganization() {
   const { id: uuid } = useParams<{ id: string }>();
   const navigate = useNavigate();
   
@@ -143,7 +143,7 @@ export default function EditOrganisation() {
       
       if (updatedOrganization) {
         // Navigate back to manage page on success
-        navigate("/organisation/manage");
+        navigate("/organization/manage");
       }
     } catch (error) {
       console.error('Error updating organization:', error);
@@ -163,8 +163,8 @@ export default function EditOrganisation() {
     return (
       <div className="p-6">
         <PageBreadCrumb
-          pageTitle="Edit Organisation"
-          parents={[{ label: "Manage Organisation", to: "/organisation/manage" }]}
+          pageTitle="Edit Organization"
+          parents={[{ label: "Manage Organization", to: "/organisation/manage" }]}
         />
         <div className="flex items-center justify-center h-64">
           <div className="text-lg">Loading organization...</div>
@@ -176,8 +176,8 @@ export default function EditOrganisation() {
   return (
     <div className="p-6">
       <PageBreadCrumb
-        pageTitle="Edit Organisation"
-        parents={[{ label: "Manage Organisation", to: "/organisation/manage" }]}
+        pageTitle="Edit Organization"
+        parents={[{ label: "Manage Organization", to: "/organisation/manage" }]}
       />
       
       {/* Error Display */}
@@ -368,7 +368,7 @@ export default function EditOrganisation() {
           <div className="flex items-center gap-3 justify-end">
             <Button 
               variant="outline" 
-              onClick={() => navigate("/organisation/manage")}
+              onClick={() => navigate("/organization/manage")}
               disabled={loading}
             >
               Cancel

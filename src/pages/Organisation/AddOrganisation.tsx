@@ -13,7 +13,7 @@ import Button from "../../components/ui/button/Button";
 import { useOrganization } from "../../services/hooks/useOrganization";
 import type { OrganizationCreateRequest } from "../../services/api/types/organization";
 
-export default function AddOrganisation() {
+export default function AddOrganization() {
   const navigate = useNavigate();
   const [status, setStatus] = useState<"Active" | "Inactive">("Active");
   const [selectedCountry, setSelectedCountry] = useState<string>("");
@@ -107,7 +107,7 @@ export default function AddOrganisation() {
       
       if (newOrganization) {
         // Navigate back to manage page on success
-        navigate("/organisation/manage");
+        navigate("/organization/manage");
       }
     } catch (error) {
       console.error('Error creating organization:', error);
@@ -117,8 +117,8 @@ export default function AddOrganisation() {
   return (
     <div className="p-6">
       <PageBreadCrumb
-        pageTitle="Add Organisation"
-        parents={[{ label: "Manage Organisation", to: "/organisation/manage" }]}
+        pageTitle="Add Organization"
+        parents={[{ label: "Manage Organization", to: "/organisation/manage" }]}
       />
       
       {/* Error Display */}
@@ -305,7 +305,7 @@ export default function AddOrganisation() {
           <div className="flex items-center gap-3 justify-end">
             <Button 
               variant="outline" 
-              onClick={() => navigate("/organisation/manage")}
+              onClick={() => navigate("/organization/manage")}
               disabled={loading}
             >
               Cancel

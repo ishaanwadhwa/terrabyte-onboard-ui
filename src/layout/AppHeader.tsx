@@ -87,11 +87,11 @@ const AppHeader: React.FC = () => {
             <div className="flex items-center gap-2">
               {/* <img
                 src="./images/logo/logo.png"
-                alt="TerraByte Onboard"
+                alt="TerraOnboard"
                 width={24}
                 height={24}
               /> */}
-              <span className="text-foreground font-semibold">TerraByte Onboard</span>
+              <span className="text-foreground font-semibold">TerraOnboard</span>
             </div>
           </Link>
 

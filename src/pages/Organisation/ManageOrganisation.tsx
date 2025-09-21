@@ -23,11 +23,13 @@ const mapOrganizationToDisplay = (org: Organization) => ({
   status: org.status === 'A' ? 'Active' : org.status === 'I' ? 'Inactive' : 'Pending' as "Active" | "Inactive" | "Pending",
 });
 
-export default function ManageOrganisation() {
+export default function ManageOrganization() {
   const [selectedUuids, setSelectedUuids] = useState<string[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Reduced to 5 to test pagination
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const pageSizeOptions = [5, 10, 15, 20, 50];
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
   
   // Use the organization hook
@@ -45,11 +47,19 @@ export default function ManageOrganisation() {
   const organisations = apiOrganizations.map(mapOrganizationToDisplay);
 
   // Pagination calculations
-  const totalItems = organisations.length;
+  const filteredOrganisations = organisations.filter((o) => {
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      o.name.toLowerCase().includes(q) ||
+      (o.email || "").toLowerCase().includes(q)
+    );
+  });
+  const totalItems = filteredOrganisations.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedOrganisations = organisations.slice(startIndex, endIndex);
+  const paginatedOrganisations = filteredOrganisations.slice(startIndex, endIndex);
 
   const allUuids = paginatedOrganisations.map((o) => o.uuid);
   const allSelected = selectedUuids.length > 0 && selectedUuids.length === allUuids.length;
@@ -109,10 +119,10 @@ export default function ManageOrganisation() {
     deleteOrganisations(selectedUuids);
   };
 
-  const getSelectedOrganisationNames = () => {
+  const getSelectedOrganizationNames = () => {
     return selectedUuids.map(uuid => {
       const org = organisations.find(o => o.uuid === uuid);
-      return org?.name || `Organisation ${uuid}`;
+      return org?.name || `Organization ${uuid}`;
     });
   };
   // Show loading state
@@ -129,8 +139,8 @@ export default function ManageOrganisation() {
 
   return (
     <div>
-    <div className="p-6">
-      <PageBreadCrumb pageTitle="Manage Tenant Organizations" />
+    <div className="pb-4">
+        <PageBreadCrumb pageTitle="Manage Tenant Organizations" />
     </div>
     
     {/* Error Display */}
@@ -157,7 +167,7 @@ export default function ManageOrganisation() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
           }
-          onClick={() => navigate("/organisation/manage/add")}
+          onClick={() => navigate("/organization/manage/add")}
           className="flex-shrink-0"
         >
           Add
@@ -169,7 +179,7 @@ export default function ManageOrganisation() {
           disabled={!isSingleSelected}
           onClick={() => {
             if (isSingleSelected) {
-              navigate(`/organisation/manage/edit/${selectedUuids[0]}`);
+              navigate(`/organization/manage/edit/${selectedUuids[0]}`);
             }
           }}
           className="flex-shrink-0"
@@ -207,7 +217,53 @@ export default function ManageOrganisation() {
       </div>
     </div>
       <div className="mt-6">
-        <ComponentCard title="Tenant Organizations List">
+        <ComponentCard 
+          title="Tenant Organizations List"
+          actions={
+            <>
+              <div className="relative w-full sm:w-auto">
+                <span className="absolute -translate-y-1/2 pointer-events-none left-3 top-1/2">
+                  <svg
+                    className="fill-gray-500 dark:fill-gray-400"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M3.04175 9.37363C3.04175 5.87693 5.87711 3.04199 9.37508 3.04199C12.8731 3.04199 15.7084 5.87693 15.7084 9.37363C15.7084 12.8703 12.8731 15.7053 9.37508 15.7053C5.87711 15.7053 3.04175 12.8703 3.04175 9.37363ZM9.37508 1.54199C5.04902 1.54199 1.54175 5.04817 1.54175 9.37363C1.54175 13.6991 5.04902 17.2053 9.37508 17.2053C11.2674 17.2053 13.003 16.5344 14.357 15.4176L17.177 18.238C17.4699 18.5309 17.9448 18.5309 18.2377 18.238C18.5306 17.9451 18.5306 17.4703 18.2377 17.1774L15.418 14.3573C16.5365 13.0033 17.2084 11.2669 17.2084 9.37363C17.2084 5.04817 13.7011 1.54199 9.37508 1.54199Z"
+                      fill=""
+                    />
+                  </svg>
+                </span>
+                <input
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  placeholder="Search name or email"
+                  className="h-10 w-full sm:w-[280px] rounded-lg border border-gray-200 bg-transparent pl-10 pr-3 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-border dark:bg-background dark:text-white dark:placeholder:text-white/30 dark:focus:border-brand-800"
+                />
+              </div>
+              <select
+                value={itemsPerPage}
+                onChange={(e) => {
+                  setItemsPerPage(Number(e.target.value));
+                  setCurrentPage(1);
+                }}
+                className="h-10 rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-brand-500/30 dark:border-brand-500 dark:bg-brand-500 dark:text-white w-full sm:w-auto"
+              >
+                {pageSizeOptions.map((n) => (
+                  <option key={n} value={n}>{n} / page</option>
+                ))}
+              </select>
+            </>
+          }
+        >
           <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
             <div className="max-w-full overflow-x-auto">
               <Table>
@@ -363,7 +419,7 @@ export default function ManageOrganisation() {
             </p>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
               <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                {getSelectedOrganisationNames().map((name, index) => (
+                {getSelectedOrganizationNames().map((name, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-gray-400 rounded-full"></span>
                     {name}
