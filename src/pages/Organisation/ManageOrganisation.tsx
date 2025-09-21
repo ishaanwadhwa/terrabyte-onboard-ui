@@ -260,13 +260,13 @@ export default function ManageOrganization() {
                     <TableCell isHeader className="px-5 py-3 text-start">
                       <Checkbox checked={allSelected} onChange={toggleAll} />
                     </TableCell>
-                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Name</TableCell>
-                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Email</TableCell>
-                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Domain</TableCell>
-                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Maximum Users</TableCell>
-                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Registered Users</TableCell>
-                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Status</TableCell>
-                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">UUID</TableCell>
+                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-700 text-start text-theme-xs dark:text-white">Name</TableCell>
+                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-700 text-start text-theme-xs dark:text-white">Email</TableCell>
+                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-700 text-start text-theme-xs dark:text-white">Domain</TableCell>
+                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-700 text-start text-theme-xs dark:text-white">Maximum Users</TableCell>
+                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-700 text-start text-theme-xs dark:text-white">Registered Users</TableCell>
+                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-700 text-start text-theme-xs dark:text-white">Status</TableCell>
+                    <TableCell isHeader className="px-5 py-3 font-medium text-gray-700 text-start text-theme-xs dark:text-white">UUID</TableCell>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
@@ -278,11 +278,11 @@ export default function ManageOrganization() {
                           onChange={(checked) => toggleOne(org.uuid, checked)}
                         />
                       </TableCell>
-                      <TableCell className="px-4 py-3 text-gray-700 text-start text-theme-sm dark:text-gray-300">{org.name}</TableCell>
-                      <TableCell className="px-4 py-3 text-gray-700 text-start text-theme-sm dark:text-gray-300">{org.email}</TableCell>
-                      <TableCell className="px-4 py-3 text-gray-700 text-start text-theme-sm dark:text-gray-300">{org.domain}</TableCell>
-                      <TableCell className="px-4 py-3 text-gray-700 text-start text-theme-sm dark:text-gray-300">{org.maxUsers}</TableCell>
-                      <TableCell className="px-4 py-3 text-gray-700 text-start text-theme-sm dark:text-gray-300">{org.registeredUsers}</TableCell>
+                      <TableCell className="px-4 py-3 text-gray-800 text-start text-theme-sm dark:text-white">{org.name}</TableCell>
+                      <TableCell className="px-4 py-3 text-gray-800 text-start text-theme-sm dark:text-white">{org.email}</TableCell>
+                      <TableCell className="px-4 py-3 text-gray-800 text-start text-theme-sm dark:text-white">{org.domain}</TableCell>
+                      <TableCell className="px-4 py-3 text-gray-800 text-start text-theme-sm dark:text-white">{org.maxUsers}</TableCell>
+                      <TableCell className="px-4 py-3 text-gray-800 text-start text-theme-sm dark:text-white">{org.registeredUsers}</TableCell>
                       <TableCell className="px-4 py-3 text-start">
                         <Badge
                           size="sm"
@@ -297,7 +297,7 @@ export default function ManageOrganization() {
                           {org.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="px-4 py-3 text-gray-700 text-start text-theme-sm dark:text-gray-300 font-mono text-xs">{org.uuid}</TableCell>
+                      <TableCell className="px-4 py-3 text-gray-800 text-start text-theme-sm dark:text-white font-mono text-xs">{org.uuid}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

@@ -6,11 +6,11 @@ export const ThemeToggleButton: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative flex items-center h-9 w-16 sm:w-32 rounded-full border transition-colors overflow-hidden border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200 dark:border-brand-600 dark:bg-brand-600 dark:text-white"
+      className="relative flex items-center h-9 w-10 sm:w-29 rounded-full border transition-colors overflow-hidden border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200 dark:border-brand-600 dark:bg-brand-600 dark:text-white"
       aria-label="Toggle theme"
     >
-      {/* Centered label on desktop */}
-      <span className="absolute inset-0 hidden sm:flex items-center justify-center text-[11px] font-semibold tracking-wide">
+      {/* Centered label on desktop with directional padding */}
+      <span className="absolute inset-0 hidden sm:flex items-center justify-center text-[11px] font-semibold tracking-wide pl-5 dark:pl-0 dark:pr-5">
         {theme === "dark" ? "DARK MODE" : "LIGHT MODE"}
       </span>
 
