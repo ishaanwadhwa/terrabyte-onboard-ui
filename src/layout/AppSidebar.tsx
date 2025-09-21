@@ -16,6 +16,7 @@ import {
   UserCircleIcon,
   BrandIcon,
 } from "../icons";
+import { MENU_CONFIG, type MenuItemConfig } from "../config/menu";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
 
@@ -26,68 +27,26 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const navItems: NavItem[] = [
-  // Dashboard temporarily hidden
-  // {
-  //   icon: <GridIcon />,
-  //   name: "Dashboard",
-  //   subItems: [{ name: "Ecommerce", path: "/", pro: false }],
-  // },
-  {
-    icon: <UserCircleIcon />,
-    name: "Organization & Users",
-    subItems: [
-      { name: "Manage Organization", path: "/organization/manage" },
-      { name: "Manage Role", path: "/organization/roles" },
-      { name: "Manage Menu", path: "/organization/menus" },
-      { name: "Manage User", path: "/organization/users" },
-    ],
-  },
-  {
-    icon: <BoxCubeIcon />,
-    name: "Edge Management",
-    subItems: [
-      { name: "Manage Edge Template", path: "/edge/templates" },
-      { name: "Edge", path: "/edge" },
-    ],
-  },
-  {
-    icon: <TableIcon />,
-    name: "Asset Management",
-    subItems: [
-      { name: "Manage Asset Template", path: "/asset/templates" },
-      { name: "Asset", path: "/asset" },
-    ],
-  },
-  // {
-  //   icon: <CalenderIcon />,
-  //   name: "Calendar",
-  //   path: "/calendar",
-  // },
-  // {
-  //   icon: <UserCircleIcon />,
-  //   name: "User Profile",
-  //   path: "/profile",
-  // },
-  // {
-  //   name: "Forms",
-  //   icon: <ListIcon />,
-  //   subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  // },
-  // {
-  //   name: "Tables",
-  //   icon: <TableIcon />,
-  //   subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  // },
-  // {
-  //   name: "Pages",
-  //   icon: <PageIcon />,
-  //   subItems: [
-  //     { name: "Blank Page", path: "/blank", pro: false },
-  //     { name: "404 Error", path: "/error-404", pro: false },
-  //   ],
-  // },
-];
+const iconMap: Record<string, React.ReactNode> = {
+  "user-circle": <UserCircleIcon />,
+  "box-cube": <BoxCubeIcon />,
+  table: <TableIcon />,
+  grid: <GridIcon />,
+  list: <ListIcon />,
+  page: <PageIcon />,
+  "pie-chart": <PieChartIcon />,
+  "plug-in": <PlugInIcon />,
+};
+
+const mapConfigToNav = (items: MenuItemConfig[]): NavItem[] =>
+  items.map((item) => ({
+    name: item.name,
+    icon: iconMap[item.iconKey] ?? <PageIcon />,
+    path: item.path,
+    subItems: item.subItems,
+  }));
+
+const navItems: NavItem[] = mapConfigToNav(MENU_CONFIG);
 
 const othersItems: NavItem[] = []
 
