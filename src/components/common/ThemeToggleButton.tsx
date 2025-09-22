@@ -10,7 +10,7 @@ export const ThemeToggleButton: React.FC = () => {
       aria-label="Toggle theme"
     >
       {/* Centered label on desktop with directional padding */}
-      <span className="absolute inset-0 hidden sm:flex items-center justify-center text-[11px] font-semibold tracking-wide pl-5 dark:pl-0 dark:pr-5">
+      <span className="absolute inset-0 hidden sm:flex items-center justify-center text-[11px] font-semibold tracking-wide pl-7 dark:pl-0 dark:pr-7">
         {theme === "dark" ? "DARK MODE" : "LIGHT MODE"}
       </span>
 
