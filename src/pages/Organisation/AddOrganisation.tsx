@@ -291,11 +291,9 @@ export default function AddOrganization() {
               </div>
               <div>
                 <Label>Secondary Mobile No.</Label>
-                <Input 
-                  name="secondaryPhone" 
-                  placeholder=""
+                <PhoneInput 
                   value={formData.secondaryPhone}
-                  onChange={(e) => handleInputChange("secondaryPhone", e.target.value)}
+                  onChange={(value) => handleInputChange("secondaryPhone", value)}
                 />
               </div>
             </div>
