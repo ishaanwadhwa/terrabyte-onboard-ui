@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Country, State, City } from "country-state-city";
 import PageBreadCrumb from "../../components/common/PageBreadCrumb";
@@ -99,6 +99,10 @@ export default function EditOrganization() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errors.email = "Please enter a valid email address";
     }
+
+    if (!formData.domain.trim()) {
+      errors.domain = "Domain is required";
+    }
     
     if (formData.maxConcurrentUsers <= 0) {
       errors.maxConcurrentUsers = "Maximum concurrent users must be greater than 0";
@@ -149,6 +153,37 @@ export default function EditOrganization() {
       console.error('Error updating organization:', error);
     }
   };
+
+  const onReset = () => {
+    if (!organization) return;
+    const mapped = mapOrganizationToFormData(organization);
+    setFormData(mapped);
+    setSelectedCountry(mapped.country);
+    setSelectedState(mapped.state);
+    setSelectedCity(mapped.city);
+    setValidationErrors({});
+  };
+
+  // Detect if any value differs from the last loaded organization
+  const isDirty = useMemo(() => {
+    if (!organization) return false;
+    const base = mapOrganizationToFormData(organization);
+    return (
+      base.name !== formData.name ||
+      base.email !== formData.email ||
+      base.domain !== formData.domain ||
+      base.description !== formData.description ||
+      base.maxConcurrentUsers !== formData.maxConcurrentUsers ||
+      base.status !== formData.status ||
+      base.address !== formData.address ||
+      base.country !== formData.country ||
+      base.state !== formData.state ||
+      base.city !== formData.city ||
+      base.pinCode !== formData.pinCode ||
+      base.primaryPhone !== formData.primaryPhone ||
+      base.secondaryPhone !== formData.secondaryPhone
+    );
+  }, [organization, formData]);
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -259,7 +294,11 @@ export default function EditOrganization() {
                   placeholder="example.com"
                   value={formData.domain}
                   onChange={(e) => handleInputChange("domain", e.target.value)}
+                  className={validationErrors.domain ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" : ""}
                 />
+                {validationErrors.domain && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors.domain}</p>
+                )}
               </div>
               <div>
                 <Label>Status</Label>
@@ -349,16 +388,17 @@ export default function EditOrganization() {
                 />
               </div>
               <div>
-                <Label>Primary Phone No.</Label>
-                <PhoneInput />
+                <Label>Primary Mobile No.</Label>
+                <PhoneInput 
+                  value={formData.primaryPhone}
+                  onChange={(v) => handleInputChange("primaryPhone", v)}
+                />
               </div>
               <div>
                 <Label>Secondary Mobile No.</Label>
-                <Input 
-                  name="secondaryPhone" 
-                  placeholder=""
+                <PhoneInput 
                   value={formData.secondaryPhone}
-                  onChange={(e) => handleInputChange("secondaryPhone", e.target.value)}
+                  onChange={(v) => handleInputChange("secondaryPhone", v)}
                 />
               </div>
             </div>
@@ -375,15 +415,18 @@ export default function EditOrganization() {
             </Button>
             <Button 
               variant="outline" 
+              type="button"
               disabled={loading}
+              onClick={onReset}
             >
               Reset
             </Button>
             <Button 
               variant="primary" 
-              disabled={loading}
+              type="submit"
+              disabled={loading || !isDirty}
             >
-              {loading ? 'Updating...' : 'Update'}
+              {loading ? 'Saving...' : 'Save'}
             </Button>
           </div>
         </Form>

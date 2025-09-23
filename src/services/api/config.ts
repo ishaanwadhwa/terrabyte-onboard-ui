@@ -19,7 +19,7 @@ export const API_ENDPOINTS = {
     CREATE: (uuid: string) => `/organizations/${uuid}`,
     UPDATE: (uuid: string) => `/organizations/${uuid}`,
     DELETE: (uuid: string) => `/organizations/${uuid}`,
-    BULK_DELETE: () => `/organizations/`,
+    BULK_DELETE: () => `/organizations`,
   },
 } as const;
 

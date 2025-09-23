@@ -10,6 +10,7 @@ interface PhoneInputProps {
   placeholder?: string;
   onChange?: (phoneNumber: string) => void;
   selectPosition?: "start" | "end"; // New prop for dropdown position
+  value?: string; // Controlled value from parent
 }
 
 const defaultCountries: CountryCode[] = [
@@ -31,6 +32,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   placeholder = "+1 (555) 000-0000",
   onChange,
   selectPosition = "start", // Default position is 'start'
+  value,
 }) => {
   // Working list (prop → API → fallback)
   const [availableCountries, setAvailableCountries] = useState<CountryCode[]>(countries || defaultCountries);
@@ -79,6 +81,20 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
     (acc, { code, label }) => ({ ...acc, [code]: label }),
     {}
   );
+
+  // If parent provides a value, keep the input in sync and try to infer country by dial prefix
+  useEffect(() => {
+    if (typeof value === "string") {
+      const next = value.trim();
+      setPhoneNumber(next);
+      const withPlus = ensurePlusPrefix(next);
+      // Find the longest dial code prefix match
+      const sortedByDialLen = [...availableCountries].sort((a, b) => b.label.length - a.label.length);
+      const match = sortedByDialLen.find((c) => withPlus.startsWith(ensurePlusPrefix(c.label)));
+      if (match) setSelectedCountry(match.code);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, availableCountries]);
 
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newCountry = e.target.value;

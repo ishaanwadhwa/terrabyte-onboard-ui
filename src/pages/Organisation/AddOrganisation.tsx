@@ -67,6 +67,11 @@ export default function AddOrganization() {
       errors.email = "Please enter a valid email address";
     }
 
+    // Domain validation
+    if (!formData.domain.trim()) {
+      errors.domain = "Domain is required";
+    }
+
     // Max concurrent users validation
     if (formData.maxConcurrentUsers <= 0) {
       errors.maxConcurrentUsers = "Maximum concurrent users must be greater than 0";
@@ -114,6 +119,25 @@ export default function AddOrganization() {
     }
   };
 
+  const onReset = () => {
+    setFormData({
+      name: "",
+      description: "",
+      email: "",
+      domain: "",
+      maxConcurrentUsers: 0,
+      address: "",
+      pinCode: "",
+      primaryPhone: "",
+      secondaryPhone: "",
+    });
+    setSelectedCountry("");
+    setSelectedState("");
+    setSelectedCity("");
+    setStatus("Active");
+    setValidationErrors({});
+  };
+
   return (
     <div className="p-6">
       <PageBreadCrumb
@@ -158,7 +182,6 @@ export default function AddOrganization() {
               <div>
                 <Label>Description</Label>
                 <TextArea 
-                  name="description" 
                   rows={4} 
                   placeholder="Description"
                   value={formData.description}
@@ -201,7 +224,11 @@ export default function AddOrganization() {
                   placeholder="example.com"
                   value={formData.domain}
                   onChange={(e) => handleInputChange("domain", e.target.value)}
+                  className={validationErrors.domain ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" : ""}
                 />
+                {validationErrors.domain && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors.domain}</p>
+                )}
               </div>
               <div>
                 <Label>Status</Label>
@@ -210,6 +237,7 @@ export default function AddOrganization() {
                     name="status"
                     id="status-active"
                     label="Active"
+                    value="Active"
                     checked={status === "Active"}
                     onChange={() => setStatus("Active")}
                   />
@@ -217,6 +245,7 @@ export default function AddOrganization() {
                     name="status"
                     id="status-inactive"
                     label="Inactive"
+                    value="Inactive"
                     checked={status === "Inactive"}
                     onChange={() => setStatus("Inactive")}
                   />
@@ -310,8 +339,9 @@ export default function AddOrganization() {
             </Button>
             <Button 
               variant="outline" 
-              type="reset"
+              type="button"
               disabled={loading}
+              onClick={onReset}
             >
               Reset
             </Button>
