@@ -26,8 +26,8 @@ const mapOrganizationToFormData = (org: any) => ({
   state: org.stateId?.toString() || "",
   city: org.city || "",
   pinCode: org.zipCode || "",
-  primaryPhone: org.phoneNumberPrimary || "",
-  secondaryPhone: org.phoneNumberSecondary || ""
+  mobileNumber: org.mobileNumberPrimary || "",
+  phoneNumber: org.phoneNumberPrimary || ""
 });
 
 export default function EditOrganization() {
@@ -46,8 +46,8 @@ export default function EditOrganization() {
     state: "",
     city: "",
     pinCode: "",
-    primaryPhone: "",
-    secondaryPhone: ""
+    mobileNumber: "",
+    phoneNumber: ""
   });
 
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
@@ -136,8 +136,8 @@ export default function EditOrganization() {
         countryId: selectedCountry ? parseInt(selectedCountry) : null,
         stateId: selectedState ? parseInt(selectedState) : null,
         zipCode: formData.pinCode || null,
-        phoneNumberPrimary: formData.primaryPhone || null,
-        phoneNumberSecondary: formData.secondaryPhone || null,
+        mobileNumberPrimary: formData.mobileNumber || null,
+        phoneNumberPrimary: formData.phoneNumber || null,
         status: formData.status === 'Active' ? 'A' : 'I', // Convert form status to API status
         createdBy: 1, // TODO: Replace with current user ID
         updatedBy: 1, // TODO: Replace with current user ID
@@ -180,8 +180,8 @@ export default function EditOrganization() {
       base.state !== formData.state ||
       base.city !== formData.city ||
       base.pinCode !== formData.pinCode ||
-      base.primaryPhone !== formData.primaryPhone ||
-      base.secondaryPhone !== formData.secondaryPhone
+      base.mobileNumber !== formData.mobileNumber ||
+      base.phoneNumber !== formData.phoneNumber
     );
   }, [organization, formData]);
 
@@ -388,17 +388,17 @@ export default function EditOrganization() {
                 />
               </div>
               <div>
-                <Label>Primary Mobile No.</Label>
+                <Label>Mobile Number</Label>
                 <PhoneInput 
-                  value={formData.primaryPhone}
-                  onChange={(v) => handleInputChange("primaryPhone", v)}
+                  value={formData.mobileNumber}
+                  onChange={(v) => handleInputChange("mobileNumber", v)}
                 />
               </div>
               <div>
-                <Label>Secondary Mobile No.</Label>
+                <Label>Phone Number</Label>
                 <PhoneInput 
-                  value={formData.secondaryPhone}
-                  onChange={(v) => handleInputChange("secondaryPhone", v)}
+                  value={formData.phoneNumber}
+                  onChange={(v) => handleInputChange("phoneNumber", v)}
                 />
               </div>
             </div>

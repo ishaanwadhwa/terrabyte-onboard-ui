@@ -27,8 +27,8 @@ export default function AddOrganization() {
     maxConcurrentUsers: 0,
     address: "",
     pinCode: "",
-    primaryPhone: "",
-    secondaryPhone: "",
+    mobileNumber: "",
+    phoneNumber: "",
   });
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
@@ -103,8 +103,8 @@ export default function AddOrganization() {
         countryId: selectedCountry ? parseInt(selectedCountry) : undefined,
         stateId: selectedState ? parseInt(selectedState) : undefined,
         zipCode: formData.pinCode || undefined,
-        phoneNumberPrimary: formData.primaryPhone || undefined,
-        phoneNumberSecondary: formData.secondaryPhone || undefined,
+        mobileNumberPrimary: formData.mobileNumber || undefined,
+        phoneNumberPrimary: formData.phoneNumber || undefined,
         status: status === 'Active' ? 'A' : 'I', // Convert form status to API status
       };
 
@@ -128,8 +128,8 @@ export default function AddOrganization() {
       maxConcurrentUsers: 0,
       address: "",
       pinCode: "",
-      primaryPhone: "",
-      secondaryPhone: "",
+      mobileNumber: "",
+      phoneNumber: "",
     });
     setSelectedCountry("");
     setSelectedState("");
@@ -312,17 +312,17 @@ export default function AddOrganization() {
                 />
               </div>
               <div>
-                <Label>Primary Phone No.</Label>
+                <Label>Mobile Number</Label>
                 <PhoneInput 
-                  value={formData.primaryPhone}
-                  onChange={(value) => handleInputChange("primaryPhone", value)}
+                  value={formData.mobileNumber}
+                  onChange={(value) => handleInputChange("mobileNumber", value)}
                 />
               </div>
               <div>
-                <Label>Secondary Mobile No.</Label>
+                <Label>Phone Number</Label>
                 <PhoneInput 
-                  value={formData.secondaryPhone}
-                  onChange={(value) => handleInputChange("secondaryPhone", value)}
+                  value={formData.phoneNumber}
+                  onChange={(value) => handleInputChange("phoneNumber", value)}
                 />
               </div>
             </div>

@@ -27,6 +27,20 @@ function ensurePlusPrefix(value: string): string {
   return trimmed.startsWith("+") ? trimmed : `+${trimmed}`;
 }
 
+function sanitizeLocalPart(value: string): string {
+  // Allow only digits and common phone separators: space, dash, parentheses, dot
+  return (value || "")
+    .replace(/[^0-9\s\-().]/g, "")
+    .replace(/\s+/g, " ") // collapse spaces
+    .trimStart();
+}
+
+function formatWithDial(dial: string, local: string): string {
+  const cleanDial = ensurePlusPrefix(dial || "");
+  const cleanLocal = sanitizeLocalPart(local || "");
+  return cleanLocal ? `${cleanDial} ${cleanLocal}` : cleanDial;
+}
+
 const PhoneInput: React.FC<PhoneInputProps> = ({
   countries,
   placeholder = "+1 (555) 000-0000",
@@ -85,12 +99,15 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   // If parent provides a value, keep the input in sync and try to infer country by dial prefix
   useEffect(() => {
     if (typeof value === "string") {
-      const next = value.trim();
-      setPhoneNumber(next);
-      const withPlus = ensurePlusPrefix(next);
+      const incoming = value.trim();
+      const withPlus = ensurePlusPrefix(incoming);
       // Find the longest dial code prefix match
       const sortedByDialLen = [...availableCountries].sort((a, b) => b.label.length - a.label.length);
       const match = sortedByDialLen.find((c) => withPlus.startsWith(ensurePlusPrefix(c.label)));
+      const dial = match ? ensurePlusPrefix(match.label) : ensurePlusPrefix(countryCodes[selectedCountry] || "");
+      const localRaw = withPlus.replace(dial, "").replace(/^\s+/, "");
+      const formatted = formatWithDial(dial, localRaw);
+      setPhoneNumber(formatted);
       if (match) setSelectedCountry(match.code);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,17 +116,28 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newCountry = e.target.value;
     setSelectedCountry(newCountry);
-    setPhoneNumber(countryCodes[newCountry]);
+    const newDial = ensurePlusPrefix(countryCodes[newCountry]);
+    // Preserve local part (strip old dial if present)
+    const currentDial = ensurePlusPrefix(countryCodes[selectedCountry] || "");
+    const localRaw = (phoneNumber || "").replace(currentDial, "").replace(/^\s+/, "");
+    const formatted = formatWithDial(newDial, localRaw);
+    setPhoneNumber(formatted);
     if (onChange) {
-      onChange(countryCodes[newCountry]);
+      onChange(formatted);
     }
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPhoneNumber = e.target.value;
-    setPhoneNumber(newPhoneNumber);
+    const inputRaw = e.target.value || "";
+    const dial = ensurePlusPrefix(countryCodes[selectedCountry] || "");
+    // Remove any leading dial present in the typed string, sanitize the remainder
+    const localRaw = inputRaw.startsWith(dial)
+      ? inputRaw.slice(dial.length)
+      : inputRaw.replace(/^\+\d+\s*/, "");
+    const formatted = formatWithDial(dial, localRaw);
+    setPhoneNumber(formatted);
     if (onChange) {
-      onChange(newPhoneNumber);
+      onChange(formatted);
     }
   };
 
